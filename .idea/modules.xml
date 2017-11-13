@@ -202,7 +202,7 @@
       <module fileurl="file://$PROJECT_DIR$/Lesson07-Waitlist/T07.03-Solution-GetAllTheData/app/src/test/test7.iml" filepath="$PROJECT_DIR$/Lesson07-Waitlist/T07.03-Solution-GetAllTheData/app/src/test/test7.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lesson07-Waitlist/T07.06-Solution-RemoveGuests/app/src/test/test8.iml" filepath="$PROJECT_DIR$/Lesson07-Waitlist/T07.06-Solution-RemoveGuests/app/src/test/test8.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lesson07-Waitlist/T07.02-Solution-CreateTheDatabase/app/src/test/test9.iml" filepath="$PROJECT_DIR$/Lesson07-Waitlist/T07.02-Solution-CreateTheDatabase/app/src/test/test9.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/ud851-Exercises.iml" filepath="$PROJECT_DIR$/.idea/ud851-Exercises.iml" />
+      <module fileurl="file://D:\AndroidGitHub\ud851-Exercises\.idea\ud851-Exercises.iml" filepath="D:\AndroidGitHub\ud851-Exercises\.idea\ud851-Exercises.iml" />
     </modules>
   </component>
 </project>
