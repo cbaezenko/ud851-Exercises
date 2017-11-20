@@ -9,5 +9,21 @@
         android:summaryOn="@string/pref_show_true"
         android:title="@string/pref_show_bass_label" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_triangle_default"
+        android:key="@string/pref_show_triangle_key"
+        android:title="@string/pref_show_triangle_label"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_show_square_default"
+        android:key="@string/pref_show_square_key"
+        android:title="@string/pref_show_square_label"
+        android:summaryOff="@string/pref_show_false"
+        android:summaryOn="@string/pref_show_true"
+        ></CheckBoxPreference>
+
     <!-- TODO (1) Add two more checkboxes for the treble and mid-range -->
 </PreferenceScreen>
