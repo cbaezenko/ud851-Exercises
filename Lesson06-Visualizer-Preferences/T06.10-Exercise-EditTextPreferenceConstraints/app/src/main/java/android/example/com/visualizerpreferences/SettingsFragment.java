@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 // TODO (1) Implement OnPreferenceChangeListener
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -52,6 +52,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             }
         }
         // TODO (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
+        Preference preference = findPreference(getString(R.string.pref_size_key));
+        preference.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -105,5 +107,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onDestroy();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Toast error = Toast.makeText(getContext(), "Invalid entry ",Toast.LENGTH_SHORT);
+        String stringKey=preference.getKey();
+        if(stringKey.equals(getString(R.string.pref_size_key))){
+           // String stringSize=preference.getSharedPreferences().getString(getString(R.string.pref_size_key),getString(R.string.pref_size_default));
+            String stringSize = ((String)newValue).trim();
+            if(stringSize.equals("")){stringSize="1";}
+            try {
+                if (!(Float.valueOf(stringSize)>0.1) || !(Float.valueOf(stringSize)<3)){error.show();return false;}
+            }catch (NumberFormatException nfe){
+                error.show();
+                return false;
+            }
+        }
+        return true;
     }
 }
