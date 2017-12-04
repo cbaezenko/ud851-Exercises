@@ -141,8 +141,6 @@ public class TaskContentProvider extends ContentProvider {
         // TODO (3) Query for the tasks directory and write a default case
         return cursor;
         // TODO (4) Set a notification URI on the Cursor and return that Cursor
-
-//        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 

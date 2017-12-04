@@ -17,6 +17,7 @@
 package com.example.android.todolist.data;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import static com.example.android.todolist.data.TaskContract.TaskEntry.TABLE_NAME;
 
@@ -157,15 +159,35 @@ public class TaskContentProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
         // TODO (1) Get access to the database and write URI matching code to recognize a single item
-
+        final SQLiteDatabase database=new TaskDbHelper(getContext()).getWritableDatabase();
         // TODO (2) Write the code to delete a single row of data
+        int matcher=sUriMatcher.match(uri);
+        ContentResolver resolver=getContext().getContentResolver();
+        int tasks_deleted;
+        switch (matcher){
+            case TASK_WITH_ID:{
+                //To work with delete, we need to first get the id, from the uri, in this way:
+                String id=uri.getPathSegments().get(1);
+                //the we use selection and selection args
+                String mSelection="_id=?";
+                String[] selection_args = new String[]{id};
+                tasks_deleted=database.delete(TaskContract.TaskEntry.TABLE_NAME,
+                        mSelection,selection_args);
+            break;
+            }
+
+            default:{
+             throw new UnsupportedOperationException("Unknown uri: "+uri);}
+        }
+
+        if(tasks_deleted!=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
         // [Hint] Use selections to delete an item by its row ID
-
         // TODO (3) Notify the resolver of a change and return the number of items deleted
-
-        throw new UnsupportedOperationException("Not yet implemented");
+        return tasks_deleted;
     }
-
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection,
