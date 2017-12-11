@@ -1,14 +1,76 @@
 package com.example.android.background.utilities;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
+
+import com.example.android.background.MainActivity;
+import com.example.android.background.R;
+
 /**
  * Utility class for creating hydration notifications
  */
 public class NotificationUtils {
 
+    public static int ID_INTENT_PENDING = 144;
+
+    public static final String CHANNEL_ID = "id";
+    public static final String CHANNEL = "Canal de Notificaciones";
+
+    public static final int NOTIFICATION_ID = 1234;
+
     // TODO (7) Create a method called remindUserBecauseCharging which takes a Context.
     // This method will create a notification for charging. It might be helpful
     // to take a look at this guide to see an example of what the code in this method will look like:
     // https://developer.android.com/training/notify-user/build-notification.html
+
+    public void remindUserBecauseCharging(Context context){
+        NotificationManager notificationManager =(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL,notificationManager.IMPORTANCE_HIGH);
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.setShowBadge(true);
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL)
+                .setColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                .setSmallIcon(R.drawable.ic_drink_notification)
+                .setLargeIcon(largeIcon(context))
+                .setContentTitle(context.getString(R.string.charging_reminder_notification_title))
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(
+                        context.getString(R.string.charging_reminder_notification_body)
+                ))
+                .setContentIntent(contentIntent(context))
+                .setContentText(context.getString(R.string.charging_reminder_notification_body))
+                .setAutoCancel(true);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+                mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        }
+
+        notificationManager.notify(NOTIFICATION_ID , mBuilder.build());
+
+    }
+
+
         // TODO (8) Get the NotificationManager using context.getSystemService
         // TODO (9) Create a notification channel for Android O devices
         // TODO (10) In the remindUser method use NotificationCompat.Builder to create a notification
@@ -32,6 +94,11 @@ public class NotificationUtils {
     // TODO (1) Create a helper method called contentIntent with a single parameter for a Context. It
     // should return a PendingIntent. This method will create the pending intent which will trigger when
     // the notification is pressed. This pending intent should open up the MainActivity.
+    public PendingIntent contentIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,ID_INTENT_PENDING,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
         // TODO (2) Create an intent that opens up the MainActivity
         // TODO (3) Create a PendingIntent using getActivity that:
             // - Take the context passed in as a parameter
@@ -45,9 +112,14 @@ public class NotificationUtils {
 
     // TODO (4) Create a helper method called largeIcon which takes in a Context as a parameter and
     // returns a Bitmap. This method is necessary to decode a bitmap needed for the notification.
+
+        public Bitmap largeIcon(Context context){
+            Resources resources = context.getResources();
+            Bitmap largeIcon = BitmapFactory.decodeResource(resources,R.drawable.ic_local_drink_black_24px);
+            return largeIcon;
+        }
         // TODO (5) Get a Resources object from the context.
         // TODO (6) Create and return a bitmap using BitmapFactory.decodeResource, passing in the
         // resources object and R.drawable.ic_local_drink_black_24px
-
 
 }
