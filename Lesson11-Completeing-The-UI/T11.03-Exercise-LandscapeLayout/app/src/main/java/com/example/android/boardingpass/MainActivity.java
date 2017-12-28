@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.boardingpass.databinding.ActivityMainBinding;
+import com.example.android.boardingpass.databinding.BoardingInfoBinding;
+import com.example.android.boardingpass.databinding.FlightInfoBinding;
 import com.example.android.boardingpass.utilities.FakeDataUtils;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +32,8 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding mBinding;
+//    BoardingInfoBinding mBoardingInfoBinding;
+//    FlightInfoBinding mFlightInfoBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding.textViewPassengerName.setText(info.passengerName);
         // TODO (7) Use the flightInfor attribute in mBinding below to get the appropiate text Views
-        mBinding.textViewOriginAirport.setText(info.originCode);
-        mBinding.textViewFlightCode.setText(info.flightCode);
-        mBinding.textViewDestinationAirport.setText(info.destCode);
+
+
+        mBinding.flightInfo.textViewOriginAirport.setText(info.originCode);
+        mBinding.flightInfo.textViewFlightCode.setText(info.flightCode);
+        mBinding.flightInfo.textViewDestinationAirport.setText(info.destCode);
 
         SimpleDateFormat formatter = new SimpleDateFormat(getString(R.string.timeFormat), Locale.getDefault());
         String boardingTime = formatter.format(info.boardingTime);
@@ -75,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding.textViewBoardingInCountdown.setText(hoursAndMinutesUntilBoarding);
         // TODO (8) Use the boardingInfo attribute in mBinding below to get the appropiate text Views
-        mBinding.textViewTerminal.setText(info.departureTerminal);
-        mBinding.textViewGate.setText(info.departureGate);
-        mBinding.textViewSeat.setText(info.seatNumber);
+
+
+        mBinding.boardingInfo.textViewTerminal.setText(info.departureTerminal);
+        mBinding.boardingInfo.textViewGate.setText(info.departureGate);
+        mBinding.boardingInfo.textViewSeat.setText(info.seatNumber);
     }
 }
 
